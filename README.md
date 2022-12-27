@@ -44,13 +44,13 @@ A new flutter app for demonstrating Sqflite
   <tr>
     <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios4.png" height="480px"></td>
     <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios5.png" height="480px"></td>
-    <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios6.png" height="480px"></td>
+   <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios6.png" height="480px"></td> 
   </tr>
  </table>
 
  <table>
   <tr>
-    <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios7.png" height="480px"></td>
+    <!-- <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/ios/ios7.png" height="480px"></td> -->
     
   </tr>
  </table>
