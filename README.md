@@ -23,7 +23,7 @@ A new flutter app for demonstrating Sqflite
   <tr>
     <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/android/android4.png" height="480px"></td>
     <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/android/android5.png" height="480px"></td>
-    <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/android/android6.png" height="480px"></td>
+   <!-- <td><img src="https://github.com/MarvelApps-Flutter/flutter_sqflite/blob/master/screenshots/android/android6.png" height="480px"></td> -->
   </tr>
  </table>
 
