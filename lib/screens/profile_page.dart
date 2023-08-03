@@ -55,7 +55,6 @@ class _ProfilePageState extends State<ProfilePage> {
     TextEditingController nameController = new TextEditingController();
     TextEditingController emailController = new TextEditingController();
     TextEditingController passController = new TextEditingController();
-    TextEditingController confirmPassController = new TextEditingController();
     TextEditingController phoneController = new TextEditingController();
     DateTime _birthDate;
     // DateFormat dateFormat = DateFormat("yyyy-MM-dd");

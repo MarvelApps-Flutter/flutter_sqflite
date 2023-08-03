@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:shared_preference_module/constants/image_constants.dart';
 import 'package:shared_preference_module/constants/string_constants.dart';

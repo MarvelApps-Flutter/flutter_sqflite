@@ -15,14 +15,14 @@ validatePassword(String value) {
 }
 
 // Function to validate name.
-validateName(String value) {
+validateName(String? value) {
   if (value == null || value.isEmpty) {
     return "Please enter your full name.";
   }
 }
 
 // Function to validate email
-validateEmail(String value) {
+validateEmail(String? value) {
   if (value == null || value.isEmpty) {
     return "Please enter your email.";
   }
@@ -34,7 +34,6 @@ validateEmail(String value) {
   if (!regEx.hasMatch(value)) {
     return "Enter a valid email ID.";
   }
-  //return "null";
 }
 
 // Function to validate phone number

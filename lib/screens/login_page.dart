@@ -144,15 +144,10 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                // checking the credentials
-                                bool credentialExists = await checkCredentials(
+                                //checking the credentials
+                                bool credentialExists = await checkIfUserExists(
                                     emailController.text.toString(),
                                     passwordController.text.toString());
-
-                                // Setting up the info in profile page
-                                //getList();
-
-                                //await getEmail(emailController.text.toString());
 
                                 if (credentialExists) {
                                   List<String> person = await getPersonList(
@@ -174,12 +169,24 @@ class _LoginPageState extends State<LoginPage> {
                                           fontWeight: FontWeight.bold),
                                     )));
                                   } else {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProfilePage(
-                                                  dataList: person,
-                                                )));
+                                    if (person.last ==
+                                        passwordController.text) {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => ProfilePage(
+                                                    dataList: person,
+                                                  )));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                        StringConstants.INCORRECT_PASSWORD,
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                      )));
+                                    }
                                   }
                                 } else {
                                   ScaffoldMessenger.of(context)

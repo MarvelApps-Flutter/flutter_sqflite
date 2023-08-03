@@ -27,6 +27,7 @@ class StringConstants {
   static const String DELETE = "Delete";
   static const String SAVE = "Save";
   static const String USER_NOT_FOUND = "User not found. Please sign up.";
+  static const String INCORRECT_PASSWORD = "Incorrect Password!!.";
   static const String WELCOME_BACK = "Welcome Back!";
   static const String DASHBOARD = "Dashboard";
 }
