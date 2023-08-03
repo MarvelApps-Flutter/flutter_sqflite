@@ -145,48 +145,36 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 //checking the credentials
-                                bool credentialExists = await checkIfUserExists(
-                                    emailController.text.toString(),
-                                    passwordController.text.toString());
+                                List<String> userDetailsList =
+                                    await getPersonList(emailController.text);
 
-                                if (credentialExists) {
-                                  List<String> person = await getPersonList(
-                                      emailController.text.toString());
-                                  print(person);
+                                // If user details list is not empty that implies that user exists.
+                                if (userDetailsList.isNotEmpty) {
+                                  print(userDetailsList);
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   prefs.setBool(StringConstants.login, true);
 
                                   prefs.setString(StringConstants.email,
                                       emailController.text);
-                                  if (person.isEmpty) {
+                                  // checking if password matches
+                                  if (userDetailsList.last ==
+                                      passwordController.text) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ProfilePage(
+                                                  dataList: userDetailsList,
+                                                )));
+                                  } else {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(SnackBar(
                                             content: Text(
-                                      StringConstants.USER_NOT_FOUND,
+                                      StringConstants.INCORRECT_PASSWORD,
                                       style: TextStyle(
                                           color: Colors.red,
                                           fontWeight: FontWeight.bold),
                                     )));
-                                  } else {
-                                    if (person.last ==
-                                        passwordController.text) {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => ProfilePage(
-                                                    dataList: person,
-                                                  )));
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                              content: Text(
-                                        StringConstants.INCORRECT_PASSWORD,
-                                        style: TextStyle(
-                                            color: Colors.red,
-                                            fontWeight: FontWeight.bold),
-                                      )));
-                                    }
                                   }
                                 } else {
                                   ScaffoldMessenger.of(context)

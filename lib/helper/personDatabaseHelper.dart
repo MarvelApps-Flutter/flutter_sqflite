@@ -83,13 +83,10 @@ class PersonDatabaseHelper {
   Future<int> updatePerson(Person person) async {
     Database db = await this.database;
 
-    //var result = await db.rawUpdate(sql)
     var result = await db.update(personTable, person.toMap(),
         where: '$personEmail = ?', whereArgs: [person.email]);
     return result;
   }
-
-  // Change User Details.
 
   // Delete Operation
   Future<int> deletePerson(String email) async {

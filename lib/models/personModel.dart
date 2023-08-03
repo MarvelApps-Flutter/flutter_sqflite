@@ -81,11 +81,4 @@ class Person {
     this._birthDate = map['birthDate'];
     this._gender = map['gender'];
   }
-
-  // Implement toString to make it easier to see information about
-  // each dog when using the print statement.
-  // @override
-  // String toString() {
-  //   return 'Person {fullName: $fullName, email: $email, phoneNumber: $phoneNumber, password: $password, birthDate: $birthDate, gender: $gender}';
-  // }
 }
