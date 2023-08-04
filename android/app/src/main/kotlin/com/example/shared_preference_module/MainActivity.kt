@@ -1,4 +1,4 @@
-package com.example.shared_preference_module
+package com.example.sqflite_module
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shared_preference_module">
+    package="com.example.sqflite_module">
    <application
-        android:label="shared_preference_module"
+        android:label="sqflite_module"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
