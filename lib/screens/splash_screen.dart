@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preference_module/constants/image_constants.dart';
-import 'package:shared_preference_module/constants/string_constants.dart';
-import 'package:shared_preference_module/helper/authenticationFunctions.dart';
-import 'package:shared_preference_module/helper/prerences.dart';
-
-import 'package:shared_preference_module/screens/login_page.dart';
-import 'package:shared_preference_module/screens/profile_page.dart';
+import 'package:flutter_sqflite/constants/string_constants.dart';
+import 'package:flutter_sqflite/screens/login_page.dart';
+import 'package:flutter_sqflite/screens/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../constants/image_constants.dart';
+import '../helper/authenticationFunctions.dart';
+import '../helper/prerences.dart';
 
 class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key}) : super(key: key);

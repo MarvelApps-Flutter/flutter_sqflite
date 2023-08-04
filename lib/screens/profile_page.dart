@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqflite/constants/string_constants.dart';
+import 'package:flutter_sqflite/helper/userFunctions.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preference_module/constants/string_constants.dart';
-import 'package:shared_preference_module/helper/userFunctions.dart';
 import '../models/personModel.dart';
 
 class ProfilePage extends StatefulWidget {

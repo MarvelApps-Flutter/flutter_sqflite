@@ -1,5 +1,6 @@
-import 'package:shared_preference_module/helper/personDatabaseHelper.dart';
-import 'package:shared_preference_module/models/personModel.dart';
+import 'package:flutter_sqflite/helper/personDatabaseHelper.dart';
+
+import '../models/personModel.dart';
 
 Future<bool> checkIfUserExists(String email, String password) async {
   bool value = true;

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preference_module/constants/image_constants.dart';
-import 'package:shared_preference_module/constants/string_constants.dart';
-
-import 'package:shared_preference_module/helper/personDatabaseHelper.dart';
-import 'package:shared_preference_module/helper/userFunctions.dart';
-import 'package:shared_preference_module/helper/validationFunctions.dart';
-import 'package:shared_preference_module/models/personModel.dart';
-import 'package:shared_preference_module/screens/login_page.dart';
+import 'package:flutter_sqflite/constants/image_constants.dart';
+import 'package:flutter_sqflite/constants/string_constants.dart';
+import 'package:flutter_sqflite/helper/validationFunctions.dart';
+import 'package:flutter_sqflite/screens/login_page.dart';
 
 import "package:intl/intl.dart";
+
+import '../helper/userFunctions.dart';
+import '../models/personModel.dart';
 
 class SignUpPage extends StatefulWidget {
   @override

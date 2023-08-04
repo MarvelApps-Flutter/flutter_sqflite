@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preference_module/helper/authenticationFunctions.dart';
-import 'package:shared_preference_module/helper/personDatabaseHelper.dart';
+import 'package:flutter_sqflite/helper/authenticationFunctions.dart';
+import 'package:flutter_sqflite/helper/personDatabaseHelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants/string_constants.dart';
 import '../models/personModel.dart';
 import '../screens/login_page.dart';

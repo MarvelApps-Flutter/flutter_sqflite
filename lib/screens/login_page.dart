@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preference_module/constants/image_constants.dart';
-import 'package:shared_preference_module/constants/string_constants.dart';
-import 'package:shared_preference_module/helper/userFunctions.dart';
-
-import 'package:shared_preference_module/helper/authenticationFunctions.dart';
-import 'package:shared_preference_module/helper/validationFunctions.dart';
-import 'package:shared_preference_module/screens/profile_page.dart';
-import 'package:shared_preference_module/screens/sign_up_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_sqflite/constants/image_constants.dart';
+import 'package:flutter_sqflite/constants/string_constants.dart';
+import 'package:flutter_sqflite/helper/userFunctions.dart';
+import 'package:flutter_sqflite/helper/validationFunctions.dart';
+import 'package:flutter_sqflite/screens/sign_up_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override

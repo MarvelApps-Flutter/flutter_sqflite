@@ -1,4 +1,4 @@
-import 'package:shared_preference_module/models/personModel.dart';
+import 'package:flutter_sqflite/models/personModel.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'dart:io';
