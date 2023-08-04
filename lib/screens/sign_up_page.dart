@@ -3,6 +3,7 @@ import 'package:shared_preference_module/constants/image_constants.dart';
 import 'package:shared_preference_module/constants/string_constants.dart';
 
 import 'package:shared_preference_module/helper/personDatabaseHelper.dart';
+import 'package:shared_preference_module/helper/userFunctions.dart';
 import 'package:shared_preference_module/helper/validationFunctions.dart';
 import 'package:shared_preference_module/models/personModel.dart';
 import 'package:shared_preference_module/screens/login_page.dart';
@@ -256,18 +257,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            debugPrint("Details are validated!!");
-                            debugPrint("Full Name: " + nameController.text);
-                            debugPrint("Email ID: " + emailController.text);
-                            debugPrint("Date of Birth: " +
-                                dateFormat.format(_birthDate!).toString());
-                            debugPrint("Gender: " + gender.toString());
-
-                            print("Phone Number: " +
-                                phoneController.text.toString());
-                            debugPrint("Account Created!!!!!!!");
-
-                            // Creating a new variable
                             var personObject = Person(
                                 nameController.text.toString(),
                                 emailController.text.toString(),
@@ -275,19 +264,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                 passController.text.toString(),
                                 dateFormat.format(_birthDate!).toString(),
                                 gender);
-                            // Initialising database instance
-                            PersonDatabaseHelper person =
-                                new PersonDatabaseHelper();
-                            await person.initializeDatabase();
 
-                            // Inserting the person details
-                            await person.insertPerson(personObject);
-
-                            // After insertion user will be navigated to login page
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginPage()));
+                            await UserFunctions()
+                                .registerUser(context, personObject);
                           }
                         },
                         child: Text(

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preference_module/constants/string_constants.dart';
-import 'package:shared_preference_module/screens/login_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../helper/authenticationFunctions.dart';
-import '../helper/personDatabaseHelper.dart';
+import 'package:shared_preference_module/helper/userFunctions.dart';
 import '../models/personModel.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String? name;
   String? email;
-  String? phone_number;
+  String? phoneNumber;
   String? gender;
   String? birthdate;
   String? password;
@@ -30,7 +26,8 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
 
     // Structure of datalist
-    //[Jigyasa, jig@gmail.com, 1999-11-14, Female, 9654707498, Abc123##]
+    // [user name, user email, user dob, user gender, user phone no., user password]
+
     name =
         widget.dataList.length == 0 ? StringConstants.name : widget.dataList[0];
     email = widget.dataList.length == 0
@@ -40,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
         widget.dataList.length == 0 ? StringConstants.male : widget.dataList[3];
     birthdate =
         widget.dataList.length == 0 ? StringConstants.dob : widget.dataList[2];
-    phone_number = widget.dataList.length == 0
+    phoneNumber = widget.dataList.length == 0
         ? StringConstants.phone_number
         : widget.dataList[4];
     password = widget.dataList.length == 0
@@ -60,13 +57,13 @@ class _ProfilePageState extends State<ProfilePage> {
     // DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     final node = FocusScope.of(context);
     return Scaffold(
-      appBar: app_bar_section(context),
-      body: profile_page_body_Section(context, nameController, node,
+      appBar: appBarSection(context),
+      body: profilePageBodySection(context, nameController, node,
           emailController, phoneController, passController),
     );
   }
 
-  SingleChildScrollView profile_page_body_Section(
+  SingleChildScrollView profilePageBodySection(
       BuildContext context,
       TextEditingController nameController,
       FocusScopeNode node,
@@ -126,25 +123,21 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Column(
                         children: [
                           SizedBox(height: 10),
-                          name_container(nameController, node),
-
-                          gender_row(),
-                          birthdate_container(context, node),
-
-                          email_container(emailController, node),
-                          //SizedBox(height: 20),
-                          phone_number_container(phoneController, node),
-
-                          password_container(passController, node),
+                          nameContainer(nameController, node),
+                          genderRow(),
+                          birthdateContainer(context, node),
+                          emailContainer(emailController, node),
+                          phoneNumberContainer(phoneController, node),
+                          passwordContainer(passController, node),
                           SizedBox(
                             height: 20,
                           ),
-                          update_profile_button(nameController, emailController,
+                          updateProfileButton(nameController, emailController,
                               phoneController, passController, context),
                           SizedBox(
                             height: 10,
                           ),
-                          delete_profile_button(nameController, emailController,
+                          deleteProfileButton(nameController, emailController,
                               phoneController, passController, context)
                         ],
                       ),
@@ -155,7 +148,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  InkWell delete_profile_button(
+  InkWell deleteProfileButton(
       TextEditingController nameController,
       TextEditingController emailController,
       TextEditingController phoneController,
@@ -163,53 +156,8 @@ class _ProfilePageState extends State<ProfilePage> {
       BuildContext context) {
     return InkWell(
       onTap: () async {
-        debugPrint("Details are validated!!");
-        debugPrint("Full Name: " + nameController.text);
-        debugPrint("Email ID: " + emailController.text);
-        // debugPrint("Date of Birth: " +
-        //     dateFormat.format(_birthDate!).toString());
-        debugPrint("Gender: " + gender.toString());
-
-        print("Phone Number: " + phoneController.text.toString());
-        debugPrint("Account Created!!!!!!!");
-
-        // Creating a new variable
-        var personObject = Person(
-            nameController.text.toString(),
-            emailController.text.toString(),
-            phoneController.text,
-            passController.text.toString(),
-            birthdate,
-            // dateFormat.format(_birthDate!).toString(),
-            gender);
-        // Initialising database instance
-        PersonDatabaseHelper person = new PersonDatabaseHelper();
-        await person.initializeDatabase();
-
-        // Inserting the person details
-        var test = await person.deletePerson(emailController.text);
-
-        print(test);
-
-        // After insertion user will be navigated to login page
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(StringConstants.login, false);
-        prefs.setString(StringConstants.email, "");
-
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => LoginPage()),
-            (Route<dynamic> route) => false);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Account Deleted Successfully !!!",
-              style:
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
+        // Delete account
+        await UserFunctions().deleteAccount(context, emailController.text);
       },
       child: Container(
         width: 250,
@@ -225,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  InkWell update_profile_button(
+  InkWell updateProfileButton(
       TextEditingController nameController,
       TextEditingController emailController,
       TextEditingController phoneController,
@@ -233,55 +181,17 @@ class _ProfilePageState extends State<ProfilePage> {
       BuildContext context) {
     return InkWell(
       onTap: () async {
-        debugPrint("Details are validated!!");
-        debugPrint("Full Name: " + nameController.text);
-        debugPrint("Email ID: " + emailController.text);
-        // debugPrint("Date of Birth: " +
-        //     dateFormat.format(_birthDate!).toString());
-        debugPrint("Gender: " + gender.toString());
-
-        print("Phone Number: " + phoneController.text.toString());
-        debugPrint("Account Created!!!!!!!");
-
-        // Creating a new variable
-        var personObject = Person(
+        // Creating a new object for updated user details
+        var personData = Person(
             nameController.text.toString(),
             emailController.text.toString(),
             phoneController.text,
             passController.text.toString(),
             birthdate,
-            // dateFormat.format(_birthDate!).toString(),
             gender);
-        // Initialising database instance
-        PersonDatabaseHelper person = new PersonDatabaseHelper();
-        await person.initializeDatabase();
 
-        // Inserting the person details
-        var test = await person.updatePerson(personObject);
-
-        print(test);
-        List<String> personDetails =
-            await getPersonList(emailController.text.toString());
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(StringConstants.login, true);
-
-        prefs.setString(StringConstants.email, emailController.text);
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ProfilePage(
-                      dataList: personDetails,
-                    )));
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              "Updated Successfully!!!",
-              style:
-                  TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
+        // Update user profile function
+        await UserFunctions().updateUserDetails(context, personData);
       },
       child: Container(
         width: 250,
@@ -298,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container password_container(
+  Container passwordContainer(
       TextEditingController passController, FocusScopeNode node) {
     return Container(
       decoration: BoxDecoration(
@@ -327,7 +237,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container phone_number_container(
+  Container phoneNumberContainer(
       TextEditingController phoneController, FocusScopeNode node) {
     return Container(
       decoration: BoxDecoration(
@@ -336,13 +246,14 @@ class _ProfilePageState extends State<ProfilePage> {
       )),
       child: TextFormField(
         //readOnly: true,
-        controller: phone_number != null
-            ? (phoneController..text = phone_number!)
+        controller: phoneNumber != null
+            ? (phoneController..text = phoneNumber!)
             : phoneController,
+        keyboardType: TextInputType.number,
         decoration: InputDecoration(
-            hintText: phone_number == null
+            hintText: phoneNumber == null
                 ? StringConstants.phone_number
-                : phone_number,
+                : phoneNumber,
             hintStyle: TextStyle(color: Colors.black),
             prefixIcon: Icon(Icons.phone),
             enabledBorder: InputBorder.none,
@@ -350,13 +261,13 @@ class _ProfilePageState extends State<ProfilePage> {
             filled: true,
             contentPadding:
                 EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0)),
-        //textInputAction: TextInputAction.next,
+
         onEditingComplete: () => node.unfocus(),
       ),
     );
   }
 
-  Container email_container(
+  Container emailContainer(
       TextEditingController emailController, FocusScopeNode node) {
     return Container(
       decoration: BoxDecoration(
@@ -382,14 +293,13 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container birthdate_container(BuildContext context, FocusScopeNode node) {
+  Container birthdateContainer(BuildContext context, FocusScopeNode node) {
     return Container(
       decoration: BoxDecoration(
           border: Border(
         bottom: BorderSide(width: 1.0, color: Colors.grey.shade300),
       )),
       child: TextFormField(
-        //controller: _birthDate,
         readOnly: true,
         decoration: InputDecoration(
             hintText: birthdate == null ? StringConstants.dob : birthdate,
@@ -409,7 +319,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Row gender_row() {
+  Row genderRow() {
     return Row(
       children: [
         SizedBox(width: 10),
@@ -445,7 +355,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Container name_container(
+  Container nameContainer(
       TextEditingController nameController, FocusScopeNode node) {
     return Container(
       decoration: BoxDecoration(
@@ -470,25 +380,19 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  AppBar app_bar_section(BuildContext context) {
+  AppBar appBarSection(BuildContext context) {
     return AppBar(
         leading: InkWell(
             onTap: () async {
-              SharedPreferences prefs = await SharedPreferences.getInstance();
-              prefs.setBool(StringConstants.login, false);
-              prefs.setString(StringConstants.email, "");
-
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                  (Route<dynamic> route) => false);
+              // logout function
+              await UserFunctions().logoutUser(context);
             },
             child: Icon(
               Icons.logout,
               color: Colors.white,
             )),
         title:
-            Text("${StringConstants.WELCOME_BACK} ${name!.split(" ").first}"),
+            Text("${StringConstants.WELCOME_BACK} ${name?.split(" ").first}"),
         backgroundColor: Color.fromRGBO(27, 213, 210, 10));
   }
 }

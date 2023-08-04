@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preference_module/constants/image_constants.dart';
 import 'package:shared_preference_module/constants/string_constants.dart';
+import 'package:shared_preference_module/helper/userFunctions.dart';
 
 import 'package:shared_preference_module/helper/authenticationFunctions.dart';
 import 'package:shared_preference_module/helper/validationFunctions.dart';
@@ -144,48 +145,11 @@ class _LoginPageState extends State<LoginPage> {
                           child: TextButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                //checking the credentials
-                                List<String> userDetailsList =
-                                    await getPersonList(emailController.text);
-
-                                // If user details list is not empty that implies that user exists.
-                                if (userDetailsList.isNotEmpty) {
-                                  print(userDetailsList);
-                                  SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  prefs.setBool(StringConstants.login, true);
-
-                                  prefs.setString(StringConstants.email,
-                                      emailController.text);
-                                  // checking if password matches
-                                  if (userDetailsList.last ==
-                                      passwordController.text) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProfilePage(
-                                                  dataList: userDetailsList,
-                                                )));
-                                  } else {
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                            content: Text(
-                                      StringConstants.INCORRECT_PASSWORD,
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold),
-                                    )));
-                                  }
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          content: Text(
-                                    StringConstants.USER_NOT_FOUND,
-                                    style: TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold),
-                                  )));
-                                }
+                                // User Login Function
+                                await UserFunctions().login(
+                                    context,
+                                    emailController.text,
+                                    passwordController.text);
                               }
                             },
                             child: Text(

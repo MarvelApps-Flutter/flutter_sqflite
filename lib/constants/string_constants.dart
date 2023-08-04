@@ -30,4 +30,8 @@ class StringConstants {
   static const String INCORRECT_PASSWORD = "Incorrect Password!!.";
   static const String WELCOME_BACK = "Welcome Back!";
   static const String DASHBOARD = "Dashboard";
+  static const String SOMETHING_WENT_WRONG = "Something went wrong !!!";
+  static const String UPDATED_SUCCESSFULLY = "Updated Successfully!!!";
+  static const String ACCOUNT_DELETED_SUCCESSFULLY =
+      "Account Deleted Successfully !!!";
 }
